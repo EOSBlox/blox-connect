@@ -6,7 +6,7 @@ A webcomponent that connects to the EOS blockchain
 
 First, make sure you have the [Polymer CLI](https://www.npmjs.com/package/polymer-cli) and npm (packaged with [Node.js](https://nodejs.org)) installed. Run `npm install` to install your element's dependencies, then run `polymer serve` to serve your element locally.
 
-## Install blox-paper
+## Install blox-connect
 
 ```
 $ npm install blox-connect
@@ -33,6 +33,8 @@ $ import 'blox-connect';
 ## Basic Use
 
 ```html
-<blox-connect selector eos="{{eos}}">
+<blox-connect 
+    selector 
+    eos="{{eos}}">
 </blox-connect>
 ```
