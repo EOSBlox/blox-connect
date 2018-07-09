@@ -26,8 +26,8 @@ class BloxConnect extends PolymerElement {
           line-height: 15px;
           padding: 5px 5px 5px 7px;
           -webkit-padding-end: 25px;
-          height: 40px;
-          font-size: 13px;
+          height: 47px;
+          font-size: 15px;
           border: 1px solid #D0D3D7;
           border-radius: 4px;
           background: url(data:image/gif;base64,R0lGODlhEgAWALMAAI2UoJKapXqAiH6DjHyCioyTno+WodHT1X+EjdDR07/BxP///////wAAAAAAAAAAACH5BAEAAAwALAAAAAASABYAAARWMKlJ60wsM7W6/52ibWC5iBpnfmimruH4wi35EQRYz0MQDCyZRwAwGAACzw6mFDJPTuayIxggEINkLPUB+ABB7qdQ0EVp59VUmjat0ZqDZa44jO74fAQAOw==) no-repeat;
@@ -35,12 +35,13 @@ class BloxConnect extends PolymerElement {
           background-size: 18px 22px;
           outline:0;
           background-color: #F0F1F3;
+          text-indent: 15px;
         }
       </style>
       <template is="dom-if" if="{{selector}}">
         <select on-change="_selected" id="select" class="selector">
           <option value="eosNewYork-mainNet">EOS New York - Main Net</option>
-          <option value="jungle-testNet">Jungle - Test Net</option>
+          <option value="cryptoLions-testNet">Crypto Lions - Test Net</option>
         </select>
       </template>
     `;
@@ -99,7 +100,7 @@ class BloxConnect extends PolymerElement {
     if (this.selected === "eosNewYork-mainNet") {
       this.httpEndpoint = "https://api.eosnewyork.io";
       this.chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
-    } else if (this.selected === "eosNewYork-mainNet") {
+    } else if (this.selected === "cryptoLions-testNet") {
       this.httpEndpoint = "https://dev.cryptolions.io:38888";
       this.chainId = "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca";
     }
