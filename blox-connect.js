@@ -55,6 +55,7 @@ class BloxConnect extends PolymerElement {
       },
       keyProvider: {
         type: String,
+        observer: "_connect"
       },
       httpEndpoint: {
         type: String,
@@ -70,7 +71,7 @@ class BloxConnect extends PolymerElement {
       },
       expireInSeconds: {
         type: Number,
-        value: 30,
+        value: 480,
       }
     };
   }
@@ -80,18 +81,27 @@ class BloxConnect extends PolymerElement {
     this._connect();
   }
 
-  _connect(keyProvider, httpEndpoint, expireInSeconds){
+  _connect(){
     return new Promise((resolve, reject) => {
       const config = {
-        keyProvider: keyProvider || this.keyProvider, 
-        httpEndpoint: httpEndpoint || this.httpEndpoint,
+        keyProvider: this.keyProvider, 
+        httpEndpoint: this.httpEndpoint,
         broadcast: true,
         sign: true,
         chainId: this.chainId,
-        expireInSeconds: expireInSeconds || this.expireInSeconds
+        expireInSeconds: this.expireInSeconds
       }
       this.eos = Eos.Localnet(config)
       resolve(this.eos);
+      if(this.keyProvider) {
+        console.log('---- CONNECTING ----')
+        console.log("key provider:" + this.keyProvider)
+        console.log("http Endpoint:" + this.httpEndpoint)
+        console.log("broadcast: true")
+        console.log("sign: true")
+        console.log("chain Id:" + this.chainId)
+        console.log("expire In Seconds:" + this.expireInSeconds)
+      }
     })
   }
 
