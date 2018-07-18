@@ -53,6 +53,11 @@ class BloxConnect extends PolymerElement {
         notify: true,
         reflectToAttribute: true
       },
+      selected: {
+        type: String,
+        notify: true,
+        reflectToAttribute: true
+      },
       keyProvider: {
         type: String,
         observer: "_connect"
@@ -61,17 +66,25 @@ class BloxConnect extends PolymerElement {
         type: String,
         value: "https://api.eosnewyork.io",
       },
+      broadcast: {
+        type: Boolean,
+        value: true,
+      },
+      sign: {
+        type: Boolean,
+        value: true,
+      },
       chainId: {
         type: String,
         value: "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906"
       },
+      expireInSeconds: {
+        type: Number,
+        value: 60,
+      },
       selector: {
         type: Boolean,
         value: false,
-      },
-      expireInSeconds: {
-        type: Number,
-        value: 480,
       }
     };
   }
@@ -82,36 +95,25 @@ class BloxConnect extends PolymerElement {
   }
 
   _connect(){
-    return new Promise((resolve, reject) => {
-      const config = {
-        keyProvider: this.keyProvider, 
-        httpEndpoint: this.httpEndpoint,
-        broadcast: true,
-        sign: true,
-        chainId: this.chainId,
-        expireInSeconds: this.expireInSeconds
-      }
-      this.eos = Eos.Localnet(config)
+    return new Promise((resolve) => {
+      const keyProvider = this.keyProvider;
+      const httpEndpoint = this.httpEndpoint;
+      const broadcast = this.broadcast;
+      const sign = this.sign;
+      const chainId = this.chainId;
+      const expireInSeconds = this.expireInSeconds;
+      this.eos = Eos({keyProvider, httpEndpoint, broadcast, sign, chainId, expireInSeconds})
       resolve(this.eos);
-      if(this.keyProvider) {
-        console.log('---- CONNECTING ----')
-        console.log("key provider:" + this.keyProvider)
-        console.log("http Endpoint:" + this.httpEndpoint)
-        console.log("broadcast: true")
-        console.log("sign: true")
-        console.log("chain Id:" + this.chainId)
-        console.log("expire In Seconds:" + this.expireInSeconds)
-      }
     })
   }
 
   _selected(){
-  this.selected = this.shadowRoot.querySelector('#select').value
+    this.selected = this.shadowRoot.querySelector('#select').value
     if (this.selected === "eosNewYork-mainNet") {
       this.httpEndpoint = "https://api.eosnewyork.io";
       this.chainId = "aca376f206b8fc25a6ed44dbdc66547c36c6c33e3a119ffbeaef943642f0e906";
     } else if (this.selected === "cryptoLions-testNet") {
-      this.httpEndpoint = "https://dev.cryptolions.io:38888";
+      this.httpEndpoint = "https://testnetnode.franceos.fr";
       this.chainId = "038f4b0fc8ff18a4f0842a8f0564611f6e96e8535901dd45e43ac8691a1c4dca";
     }
     this._connect()
